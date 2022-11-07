@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "422373322577",
+    "project_id": "gypchat",
+    "storage_bucket": "gypchat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:422373322577:android:d98af8038ef6c2ce7bed70",
+        "android_client_info": {
+          "package_name": "yupenggu.rn.GypChat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "422373322577-baa28l3s61kh10o31iihnrlm1alsdchp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsjwLv_FPwPkc4vT4DPVwdxX-Nj8sZTxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "422373322577-baa28l3s61kh10o31iihnrlm1alsdchp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "422373322577-fmpj8dni0l3nnao2iaot9ivfatq0v5ij.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "yupenggu.rn.GypChat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

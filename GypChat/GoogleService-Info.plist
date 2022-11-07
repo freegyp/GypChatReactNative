@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>422373322577-fmpj8dni0l3nnao2iaot9ivfatq0v5ij.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.422373322577-fmpj8dni0l3nnao2iaot9ivfatq0v5ij</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDaPlyDrGwSyucyDBh1fczbqHKegtOr6WQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>422373322577</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>yupenggu.rn.GypChat</string>
+	<key>PROJECT_ID</key>
+	<string>gypchat</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gypchat.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:422373322577:ios:b0057441888e53217bed70</string>
+</dict>
+</plist>
