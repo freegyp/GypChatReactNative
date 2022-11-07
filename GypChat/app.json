@@ -20,6 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "yupenggu.rn.GypChat",
+      "googleServicesFile": "./GoogleService-Info.plist",
     },
     "android": {
       "adaptiveIcon": {
@@ -27,9 +28,13 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "yupenggu.rn.GypChat",
+      "googleServicesFile": "./google-services.json",
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "@react-native-firebase/app",
+    ],
   }
 }
