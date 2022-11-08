@@ -7,7 +7,6 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Badge } from "react-native-elements";
 
-
 const styles = StyleSheet.create({
   tabBar: {
     flexDirection: 'row',
