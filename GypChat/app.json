@@ -18,9 +18,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "yupenggu.rn.GypChat",
-      "googleServicesFile": "./GoogleService-Info.plist",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,13 +28,28 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "yupenggu.rn.GypChat",
-      "googleServicesFile": "./google-services.json",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "@react-native-firebase/app",
+      "@react-native-firebase/perf",
+      "@react-native-firebase/crashlytics",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
     ],
+    "extra": {
+      "eas": {
+        "projectId": "c3ccfedf-0816-4fc8-8005-0d0efcc68f3b"
+      }
+    }
   }
 }

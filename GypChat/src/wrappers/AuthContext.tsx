@@ -21,6 +21,7 @@ type SignUpProps = {
 
 interface AuthContextType {
   authState: UserAuthState;
+  setAuthState: (newState:UserAuthState) => void;
   userProfile?: UserProfile;
   logIn: (props:LoginProps) => Promise<unknown>;
   logOut: () => Promise<unknown>;
@@ -106,13 +107,14 @@ export const AuthContextProvider = (props:{
 
   const contextValue = useMemo(() => ({
     authState,
+    setAuthState,
     userProfile,
     logIn,
     logOut,
     signUp,
     updateEmail,
     updatePassword
-  }), [authState, userProfile, logIn, logOut, signUp]);
+  }), [authState, userProfile, logOut, logIn, signUp, updateEmail, updatePassword]);
 
   return (
     <AuthContext.Provider value={contextValue}>
