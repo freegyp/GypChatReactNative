@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 50,
     borderColor: "#E3E6E7",
     borderWidth: 0.5,
+    backgroundColor: "white",
   },
   tabBarItem: {
     flexShrink: 1,

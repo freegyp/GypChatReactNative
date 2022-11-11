@@ -1170,6 +1170,8 @@ PODS:
     - Firebase/Performance (= 10.1.0)
     - React-Core
     - RNFBApp
+  - RNGestureHandler (2.8.0):
+    - React-Core
   - RNVectorIcons (9.2.0):
     - React-Core
   - Yoga (1.14.0)
@@ -1229,6 +1231,7 @@ DEPENDENCIES:
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBPerf (from `../node_modules/@react-native-firebase/perf`)"
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -1365,6 +1368,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/firestore"
   RNFBPerf:
     :path: "../node_modules/@react-native-firebase/perf"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   Yoga:
@@ -1447,6 +1452,7 @@ SPEC CHECKSUMS:
   RNFBCrashlytics: dd5287928db5f36b962ca13b365c0b0a20a86486
   RNFBFirestore: dbb6e55179219a424b4cd98873a6a44e1d0a113e
   RNFBPerf: d54c45354104ffac7d008a5715a3600cf0c6de36
+  RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   Yoga: eca980a5771bf114c41a754098cd85e6e0d90ed7
 
