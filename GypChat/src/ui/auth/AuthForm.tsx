@@ -14,7 +14,7 @@ import {
 import TextLink from 'react-native-text-link';
 import { useNavigation } from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { GreatVibes_400Regular } from '@expo-google-fonts/great-vibes'
+import { GreatVibes_400Regular } from '@expo-google-fonts/great-vibes';
 import { useFonts } from "expo-font";
 import AppLoading from 'expo-app-loading';
 

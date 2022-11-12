@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Button } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Badge } from "react-native-elements";
+import create from "zustand";
+
+import ConversationsStack from "./conversations/ConversationsStack";
 
 const styles = StyleSheet.create({
   tabBar: {
@@ -25,13 +28,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const ProfileStackScreen = () => {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "white" }}>
-      <Text>Profiles!</Text>
-    </View>
-  );
-};
+export const useMainTabState = create((set) => ({
+  visible: true,
+  showMainTab: () => set({visible:true}),
+  hideMainTab: () => set({visible:false})
+}));
 
 const ContactsStackScreen = () => {
   return (
@@ -41,14 +42,13 @@ const ContactsStackScreen = () => {
   );
 };
 
-const ConversationsStackScreen = () => {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "white" }}>
-      <Text>Conversations!</Text>
-    </View>
-  );
-};
 const TabBar = ({ state, descriptors, navigation }:BottomTabBarProps) => {
+  const visible = useMainTabState((state) => state.visible);
+
+  if (!visible){
+    return <View/>;
+  }
+
   return (
     <View style={styles.tabBar}>
       {state.routes.map((route, index) => {
@@ -131,7 +131,7 @@ const Tab = createBottomTabNavigator();
 export default function MainTabNavigator() {
   return (
     <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
-      <Tab.Screen name="Conversations" component={ConversationsStackScreen} options={{
+      <Tab.Screen name="ConversationStack" component={ConversationsStack} options={{
         headerShown: false,
         tabBarLabel: "Conversations",
         tabBarIcon: ({ color, size }) => (
@@ -143,13 +143,6 @@ export default function MainTabNavigator() {
         tabBarLabel: "Contacts",
         tabBarIcon: ({ color, size }) => (
           <MaterialIcons name="contacts" color={color} size={size} />
-        ),
-      }} />
-      <Tab.Screen name="Profile" component={ProfileStackScreen} options={{
-        headerShown: false,
-        tabBarLabel: "Profile",
-        tabBarIcon: ({ color, size }) => (
-          <MaterialIcons name="home" color={color} size={size} />
         ),
       }} />
     </Tab.Navigator>
