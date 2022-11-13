@@ -1,11 +1,13 @@
 import * as React from 'react';
 import {
   SafeAreaView,
+  Platform,
   View,
   Text,
   Button,
   FlatList,
   StyleSheet,
+  TextInput,
   TouchableOpacity
 } from 'react-native';
 // import { getHeaderTitle } from '@react-navigation/elements';
@@ -13,6 +15,10 @@ import FastImage from 'react-native-fast-image';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from "expo-font";
 import { GreatVibes_400Regular } from '@expo-google-fonts/great-vibes';
+import Entypo from 'react-native-vector-icons/Entypo';
+import Modal from "react-native-modal";
+
+import ProfileModal from "../../ui/profile/ProfileModal";
 
 const styles = StyleSheet.create({
   container: {
@@ -20,10 +26,9 @@ const styles = StyleSheet.create({
   },
   item: {
     height: 72,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     borderBottomColor: "#cccccc",
-    marginLeft: 8,
-    marginRight: 8,
+    marginHorizontal: 8,
     marginTop: 8,
     flexDirection: 'row',
     justifyContent: "flex-start",
@@ -34,7 +39,7 @@ const styles = StyleSheet.create({
     minWidth: 56,
     height: 56,
     borderRadius: 28,
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: "#aaaaaa",
   },
   msgText: {
@@ -49,11 +54,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    paddingLeft: 18,
-    paddingRight: 18,
+    paddingHorizontal: 18,
     paddingBottom: 12,
-    height: 114,
-    borderBottomWidth: 1,
+    height: Platform.OS === "ios" ? 114 : 64,
+    borderBottomWidth: 0.5,
     borderBottomColor: "#cccccc",
   },
   headerLeftImage: {
@@ -67,10 +71,10 @@ const styles = StyleSheet.create({
     color: "purple",
     fontFamily: "GreatVibes_400Regular",
     fontSize: 18,
-  }
+  },
 });
 
-const profileImagePlaceholderURL = "https://www.pngkey.com/png/full/73-730477_first-name-profile-image-placeholder-png.png";
+const profileImagePlaceholderURL = "https://image.shutterstock.com/image-vector/default-avatar-profile-icon-social-600w-1677509740.jpg";
 
 const DATA = [
   {
@@ -90,7 +94,7 @@ const DATA = [
   },
 ];
 
-export const ConversationsScreenHeader = () => {
+export const ConversationsScreenHeader = ({leftAction}) => {
   let [fontsLoaded] = useFonts({
     GreatVibes_400Regular,
   });
@@ -101,10 +105,16 @@ export const ConversationsScreenHeader = () => {
 
   return (
     <View style={styles.header}>
-      <FastImage
+      <TouchableOpacity
         style={styles.headerLeftImage}
-        source={{uri: profileImagePlaceholderURL}}
-      />
+        activeOpacity={0.6}
+        onPress={leftAction}
+      >
+        <FastImage
+          style={styles.headerLeftImage}
+          source={{uri: profileImagePlaceholderURL}}
+        />
+      </TouchableOpacity>
       <Text style={styles.headerRightText}>GypChat</Text>
     </View>
   );
@@ -137,7 +147,7 @@ const ConversationItem = ({ name, lastMsg, onPress }) => (
   </TouchableOpacity>
 );
 
-const ConversationsScreen = ({navigation}) => {
+const ConversationsScreen = ({navigation, showModal, hideAction}) => {
   const goToDetail = React.useCallback((id, name) => {
     navigation.push("ConversationDetail", {id:id, name:name});
   }, []);
@@ -156,6 +166,11 @@ const ConversationsScreen = ({navigation}) => {
         data={DATA}
         keyExtractor={item => item.id}
         renderItem={renderItem}
+      />
+
+      <ProfileModal
+        showModal={showModal}
+        hideAction={hideAction}
       />
     </SafeAreaView>
   );

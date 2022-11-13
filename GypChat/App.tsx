@@ -5,6 +5,7 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import AuthSwitchTabNavigator from './src/screens/AuthSwitchTab';
 import MainTabNavigator from "./src/screens/MainTab";
 import { AuthContextProvider } from "./src/wrappers/AuthContext";
+import { ConversationsContextProvider } from "./src/wrappers/ConversationsContext";
 
 const MyTheme = {
   ...DefaultTheme,
@@ -18,9 +19,11 @@ const MyTheme = {
 export default function App() {
   return (
     <AuthContextProvider>
-      <NavigationContainer theme={MyTheme}>
-        <AuthSwitchTabNavigator />
-      </NavigationContainer>
+      <ConversationsContextProvider>
+        <NavigationContainer theme={MyTheme}>
+          <AuthSwitchTabNavigator />
+        </NavigationContainer>
+      </ConversationsContextProvider>
     </AuthContextProvider>
   );
 }

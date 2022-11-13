@@ -34,6 +34,7 @@ export const AuthContext = createContext<null | AuthContextType>(null);
 export const AuthContextProvider = (props:{
   children: ReactNode
 }) => {
+
   const [authState, setAuthState] = useState<UserAuthState>(UserAuthState.UNDECIDED);
 
   const [userProfile, setUserProfile] = useState<UserProfile | undefined>();

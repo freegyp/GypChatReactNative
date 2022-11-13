@@ -20,7 +20,7 @@ import FastImage from 'react-native-fast-image';
 import { useMainTabState } from "../MainTab";
 
 
-const profileImagePlaceholderURL = "https://www.pngkey.com/png/full/73-730477_first-name-profile-image-placeholder-png.png";
+const profileImagePlaceholderURL = "https://image.shutterstock.com/image-vector/default-avatar-profile-icon-social-600w-1677509740.jpg";
 
 const styles = StyleSheet.create({
   container: {
