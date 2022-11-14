@@ -187,7 +187,7 @@ const EditTopBar = ({title, setModalState}) => {
       >
         <Entypo name="chevron-left" color={"black"} size={16} />
       </TouchableOpacity>
-      <Text style={{fontSize:16, fontWeight:"500",}}>{title}</Text>
+      <Text style={{flex:1, textAlign:"center",fontSize:16, fontWeight:"500",}}>{title}</Text>
       <TouchableOpacity
         style={{flexShrink:1, minWidth:16, height: 16}}
         activeOpacity={0.6}

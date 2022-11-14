@@ -4,7 +4,6 @@ import {
   Platform,
   View,
   Text,
-  Button,
   FlatList,
   StyleSheet,
   TextInput,
@@ -16,7 +15,7 @@ import AppLoading from 'expo-app-loading';
 import { useFonts } from "expo-font";
 import { GreatVibes_400Regular } from '@expo-google-fonts/great-vibes';
 import Entypo from 'react-native-vector-icons/Entypo';
-import Modal from "react-native-modal";
+import Constants from 'expo-constants';
 
 import ProfileModal from "../../ui/profile/ProfileModal";
 
@@ -55,8 +54,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-end',
     paddingHorizontal: 18,
-    paddingBottom: 12,
-    height: Platform.OS === "ios" ? 114 : 64,
+    paddingBottom: 8,
+    height: Constants.statusBarHeight + 48,
     borderBottomWidth: 0.5,
     borderBottomColor: "#cccccc",
   },

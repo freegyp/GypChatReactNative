@@ -8,6 +8,7 @@ import { Badge } from "react-native-elements";
 import create from "zustand";
 
 import ConversationsStack from "./conversations/ConversationsStack";
+import ContactsScreen, { ContactsScreenHeader } from "./contacts/ContactsScreen";
 
 const styles = StyleSheet.create({
   tabBar: {
@@ -33,14 +34,6 @@ export const useMainTabState = create((set) => ({
   showMainTab: () => set({visible:true}),
   hideMainTab: () => set({visible:false})
 }));
-
-const ContactsStackScreen = () => {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "white" }}>
-      <Text>Contacts!</Text>
-    </View>
-  );
-};
 
 const TabBar = ({ state, descriptors, navigation }:BottomTabBarProps) => {
   const visible = useMainTabState((state) => state.visible);
@@ -129,6 +122,8 @@ const TabBar = ({ state, descriptors, navigation }:BottomTabBarProps) => {
 const Tab = createBottomTabNavigator();
 
 export default function MainTabNavigator() {
+  const [showContactsModal, setShowContactsModal] = React.useState(false);
+
   return (
     <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
       <Tab.Screen name="ConversationStack" component={ConversationsStack} options={{
@@ -138,13 +133,25 @@ export default function MainTabNavigator() {
           <Entypo name="chat" color={color} size={size} />
         ),
       }} />
-      <Tab.Screen name="Contacts" component={ContactsStackScreen} options={{
-        headerShown: false,
+      <Tab.Screen name="Contacts" options={{
         tabBarLabel: "Contacts",
         tabBarIcon: ({ color, size }) => (
           <MaterialIcons name="contacts" color={color} size={size} />
         ),
-      }} />
+        header: (props) => {
+          return (
+            <ContactsScreenHeader
+              rightAction={()=>setShowContactsModal(true)}
+            />
+          )
+        },
+      }}>
+        {(props) => <ContactsScreen
+          {...props}
+          showModal={showContactsModal}
+          hideAction={()=>setShowContactsModal(false)}
+        />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }
