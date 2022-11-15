@@ -136,7 +136,7 @@ const MenuButton = ({title, onPress}) => {
 };
 
 const ProfileMainView = ({setModalState}) => {
-  const { updateProfilePic, userProfile } = useAuthRegContext();
+  const { updateProfilePic, userProfile, logOut } = useAuthRegContext();
 
   const pickImage = async () => {
     const permissionRes = await ImagePicker.getCameraPermissionsAsync();
@@ -196,7 +196,7 @@ const ProfileMainView = ({setModalState}) => {
       <TouchableOpacity
         style={styles.logoutButton}
         activeOpacity={0.6}
-        onPress={()=>console.log("Log out pressed!")}
+        onPress={logOut}
       >
         <Text style={{fontSize:14, fontWeight:"500"}}>Log out</Text>
       </TouchableOpacity>
