@@ -19,6 +19,7 @@ import Constants from 'expo-constants';
 
 import ProfileModal from "../../ui/profile/ProfileModal";
 import { useAuthRegContext } from "../../wrappers/AuthContext";
+import { useConversationsContext } from "../../wrappers/ConversationsContext";
 
 const styles = StyleSheet.create({
   container: {
