@@ -12,6 +12,8 @@ import {
 import FastImage from 'react-native-fast-image';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Modal from "react-native-modal";
+import * as ImagePicker from 'expo-image-picker';
+import { useAuthRegContext } from "../../wrappers/AuthContext";
 
 const styles = StyleSheet.create({
   modalContainer: {
@@ -134,23 +136,48 @@ const MenuButton = ({title, onPress}) => {
 };
 
 const ProfileMainView = ({setModalState}) => {
+  const { updateProfilePic, userProfile } = useAuthRegContext();
+
+  const pickImage = async () => {
+    const permissionRes = await ImagePicker.getCameraPermissionsAsync();
+
+    if (!permissionRes.granted){
+      const reqPermRes = await ImagePicker.requestCameraPermissionsAsync();
+      if(!reqPermRes.granted){
+        return;
+      }
+    }
+
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if ((result.assets?.length ?? 0) >= 1){
+      const localURI = result.assets[0].uri;
+      await updateProfilePic(localURI);
+    }
+  }
+
   return (
     <View style={styles.modalContainer}>
       <TouchableOpacity
         style={styles.modalProfileHeader}
         activeOpacity={0.6}
-        onPress={()=>console.log("Profile header touched!")}
+        onPress={pickImage}
       >
         <FastImage
           style={styles.modalProfileImage}
-          source={{uri: profileImagePlaceholderURL}}
+          source={{uri: userProfile?.photoURL ?? profileImagePlaceholderURL}}
         />
         <View style={styles.modalProfileTexts}>
           <Text style={styles.modalProfileName}>
-            My Name
+            { userProfile?.displayName ?? "Unknown name" }
           </Text>
           <Text style={styles.modalProfileEmail} numberOfLines={1}>
-            someone@someemail.com
+            { userProfile?.email ?? "anonymous@unknown.cc" }
           </Text>
           <Text style={styles.modalProfileHint}>
             Tap to change profile photo.
@@ -177,7 +204,7 @@ const ProfileMainView = ({setModalState}) => {
   );
 };
 
-const EditTopBar = ({title, setModalState}) => {
+const EditTopBar = ({title, setModalState, onSubmit}) => {
   return (
     <View style={styles.editFieldTopBar}>
       <TouchableOpacity
@@ -191,7 +218,7 @@ const EditTopBar = ({title, setModalState}) => {
       <TouchableOpacity
         style={{flexShrink:1, minWidth:16, height: 16}}
         activeOpacity={0.6}
-        onPress={()=>console.log("Submit clicked!!!")}
+        onPress={onSubmit}
       >
         <Text style={{fontSize:12, fontWeight:"300",}}>Submit</Text>
       </TouchableOpacity>
@@ -200,10 +227,20 @@ const EditTopBar = ({title, setModalState}) => {
 };
 
 const ChangeNameView = ({setModalState}) => {
+  const { updateName } = useAuthRegContext();
   const [ editName, setEditName ] = React.useState("");
+  const onSubmit = React.useCallback(async () => {
+    await updateName(editName);
+    setModalState("main");
+  }, [editName, updateName]);
+
   return (
     <View style={styles.modalContainer}>
-      <EditTopBar title="Change Name" setModalState={setModalState} />
+      <EditTopBar
+        title="Change Name"
+        setModalState={setModalState}
+        onSubmit={onSubmit}
+      />
 
       <TextInput
         style={{
@@ -223,10 +260,20 @@ const ChangeNameView = ({setModalState}) => {
 };
 
 const ChangeEmailView = ({setModalState}) => {
+  const { updateEmail } = useAuthRegContext();
   const [ editEmail, setEditEmail ] = React.useState("");
+  const onSubmit = React.useCallback(async () => {
+    await updateEmail(editEmail);
+    setModalState("main");
+  }, [editEmail, updateEmail]);
+
   return (
     <View style={styles.modalContainer}>
-      <EditTopBar title="Change Email" setModalState={setModalState} />
+      <EditTopBar
+        title="Change Email"
+        setModalState={setModalState}
+        onSubmit={onSubmit}
+      />
 
       <TextInput
         style={{
@@ -247,8 +294,15 @@ const ChangeEmailView = ({setModalState}) => {
 };
 
 const ChangePasswordView = ({setModalState}) => {
+  const { updatePassword } = useAuthRegContext();
   const [ editPassword, setEditPassword ] = React.useState("");
   const [ editPasswordConfirm, setEditPasswordConfirm ] = React.useState("");
+  const onSubmit = React.useCallback(async () => {
+    if (editPassword === editPasswordConfirm){
+      await updatePassword(editPassword);
+      setModalState("main");
+    }
+  }, [editPassword, updatePassword]);
 
   return (
     <View style={styles.modalContainer}>

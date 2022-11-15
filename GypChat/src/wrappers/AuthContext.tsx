@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState, ReactNode } from "react"
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { UserProfile } from "../models/UserProfile";
+import UserAuthAPI from "../api/UserAuth";
 
 export const enum UserAuthState {
   UNDECIDED = 'UNDECIDED',
@@ -25,8 +26,10 @@ interface AuthContextType {
   logIn: (props:LoginProps) => Promise<unknown>;
   logOut: () => Promise<unknown>;
   signUp: (props:SignUpProps) => Promise<unknown>;
+  updateName: (name:string) => Promise<unknown>;
   updateEmail: (email:string) => Promise<unknown>;
   updatePassword: (password:string) => Promise<unknown>;
+  updateProfilePic: (localURI:string) => Promise<unknown>;
 }
 
 export const AuthContext = createContext<null | AuthContextType>(null);
@@ -40,17 +43,13 @@ export const AuthContextProvider = (props:{
   const [userProfile, setUserProfile] = useState<UserProfile | undefined>();
 
   const logOut = useCallback(async () => {
-    await auth().signOut();
+    await UserAuthAPI.signOut()
   }, []);
 
   const logIn = useCallback(async (props:LoginProps) => {
     const { email, password } = props;
 
-    try{
-      await auth().signInWithEmailAndPassword(email, password);
-    } catch (err) {
-      throw err.message;
-    }
+    await UserAuthAPI.signIn(email, password);
   }, [logOut]);
 
   const signUp = useCallback(async (props:SignUpProps) => {
@@ -60,11 +59,7 @@ export const AuthContextProvider = (props:{
       throw "Password confirm does not match!";
     }
 
-    try{
-      await auth().createUserWithEmailAndPassword(email, password);
-    } catch (err) {
-      throw err.message;
-    }
+    await UserAuthAPI.signUp(email, password);
   }, []);
 
   const onAuthStateChanged = useCallback((user:FirebaseAuthTypes.User | null) => {
@@ -82,29 +77,50 @@ export const AuthContextProvider = (props:{
     }
   }, []);
 
+  const updateName = useCallback(async (name:string) => {
+    if (userProfile){
+      await UserAuthAPI.updateName(name);
+      setUserProfile(prev => {
+        return {
+          ...prev,
+          displayName: name,
+        };
+      });
+    }
+  }, [userProfile]);
+
   const updateEmail = useCallback(async (email:string) => {
-    try{
-      if (userProfile){
-        await auth().currentUser?.updateEmail(email);
-      }
-    } catch (err) {
-      throw err.message;
+    if (userProfile){
+      await UserAuthAPI.updateEmail(email);
+      setUserProfile(prev => {
+        return {
+          ...prev,
+          email: email,
+        };
+      });
     }
   }, [userProfile]);
 
   const updatePassword = useCallback(async (password:string) => {
-    try{
-      if (userProfile){
-        await auth().currentUser?.updatePassword(password);
-      }
-    } catch (err) {
-      throw err.message;
+    if (userProfile){
+      await UserAuthAPI.updatePassword(password);
     }
-  }, [userProfile])
+  }, [userProfile]);
+
+  const updateProfilePic = useCallback(async (localURI:string) => {
+    if (userProfile){
+      const remoteUrl = await UserAuthAPI.updateProfilePic(localURI, userProfile.uid);
+      setUserProfile(prev => {
+        return {
+          ...prev,
+          photoURL: remoteUrl,
+        };
+      });
+    }
+  }, [userProfile]);
 
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber;
+    return UserAuthAPI.onAuthStateChanged(onAuthStateChanged);
   }, [logOut]);
 
   const contextValue = useMemo(() => ({
@@ -113,15 +129,17 @@ export const AuthContextProvider = (props:{
     logIn,
     logOut,
     signUp,
+    updateName,
     updateEmail,
-    updatePassword
-  }), [authState, userProfile, logOut, logIn, signUp, updateEmail, updatePassword]);
+    updatePassword,
+    updateProfilePic
+  }), [authState, userProfile, logOut, logIn, signUp, updateName, updateEmail, updatePassword, updateProfilePic]);
 
   return (
     <AuthContext.Provider value={contextValue}>
       {props.children}
     </AuthContext.Provider>
-  )
+  );
 };
 
 export const useAuthRegContext = () => {

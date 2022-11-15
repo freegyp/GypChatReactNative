@@ -18,6 +18,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Constants from 'expo-constants';
 
 import ProfileModal from "../../ui/profile/ProfileModal";
+import { useAuthRegContext } from "../../wrappers/AuthContext";
 
 const styles = StyleSheet.create({
   container: {
@@ -94,6 +95,8 @@ const DATA = [
 ];
 
 export const ConversationsScreenHeader = ({leftAction}) => {
+  const { userProfile } = useAuthRegContext();
+
   let [fontsLoaded] = useFonts({
     GreatVibes_400Regular,
   });
@@ -111,7 +114,7 @@ export const ConversationsScreenHeader = ({leftAction}) => {
       >
         <FastImage
           style={styles.headerLeftImage}
-          source={{uri: profileImagePlaceholderURL}}
+          source={{uri: userProfile?.photoURL ?? profileImagePlaceholderURL}}
         />
       </TouchableOpacity>
       <Text style={styles.headerRightText}>GypChat</Text>

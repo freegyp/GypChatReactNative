@@ -18,6 +18,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FastImage from 'react-native-fast-image';
 
 import { useMainTabState } from "../MainTab";
+import { useAuthRegContext } from "../../wrappers/AuthContext";
 
 
 const profileImagePlaceholderURL = "https://image.shutterstock.com/image-vector/default-avatar-profile-icon-social-600w-1677509740.jpg";
@@ -134,14 +135,17 @@ const DATA = [
 ];
 
 const DialogMessageItem = ({type, message}) => {
+  const { userProfile } = useAuthRegContext();
   const styleMessage = type === "inbounding" ? styles.dialogMessageInbounding : styles.dialogMessageOutgoing;
   const styleTextBox = type === "inbounding" ? styles.dialogMessageBoxInbounding : styles.dialogMessageBoxOutgoing;
+
+  const photoUri = type === "inbounding" ? profileImagePlaceholderURL : (userProfile?.photoURL ?? profileImagePlaceholderURL);
 
   return (
     <View style={styleMessage}>
       <FastImage
         style={styles.profIcon}
-        source={{uri: profileImagePlaceholderURL}}
+        source={{uri: photoUri}}
       />
       <View style={styleTextBox}>
         <Text>
